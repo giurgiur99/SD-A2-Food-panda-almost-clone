@@ -1,0 +1,17 @@
+table {
+  width: 75%;
+  align-self: center;
+  align-items: center;
+  align-content: center;
+  margin-left: 120px;
+}
+
+th.mat-header-cell {
+  text-align: center;
+}
+
+td.mat-cell,
+th.mat-header-cell {
+  text-align: center;
+  justify-content: center;
+}

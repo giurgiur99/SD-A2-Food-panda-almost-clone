@@ -1,0 +1,53 @@
+<mat-toolbar color="primary" class="app-header">
+  <span class="nav-tool-items">
+    <a mat-button class="logo"> Food koala </a>
+  </span>
+</mat-toolbar>
+
+<div class="welcome-div">
+  <mat-card class="welcome">
+    <mat-card-title>Hello, {{ customer.name }}</mat-card-title>
+    <mat-card-subtitle>What would you like to order today?</mat-card-subtitle>
+  </mat-card>
+</div>
+<br />
+
+<!-- <mat-grid-list
+  cols="1"
+  rowHeight="2:1"
+  gutterSize="5px"
+  > -->
+<div
+  fxLayout="row wrap"
+  fxLayout.xs="column"
+  fxLayoutAlign="space-around center"
+  fxLayoutGap="25px"
+  *ngFor="let restaurant of restaurants"
+>
+  <mat-card
+    class="example-card"
+    fxFlex="calc(33%-25px)"
+    fxFlex.sm="calc(50%-25px)"
+  >
+    <mat-card-header>
+      <mat-card-title>{{ restaurant.name }}</mat-card-title>
+      <mat-card-subtitle>{{ restaurant.location }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <img
+      mat-card-image
+      [src]="restaurant.imgUrl"
+      alt="Photo of a Shiba Inu"
+      src="../../../../assets/card-pics/asset_Burger king.jpg"
+    />
+    <mat-card-content>
+      <p>
+        {{ restaurant.description }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>SAVE</button>
+      <button mat-button (click)="handleViewMenu(restaurant)">VIEW MENU</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

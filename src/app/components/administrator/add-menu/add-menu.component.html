@@ -1,0 +1,106 @@
+<mat-toolbar color="primary" class="app-header">
+  <span class="nav-tool-items">
+    <a
+      mat-button
+      routerLink="/administrator/add"
+      routerLinkActive="active"
+      [state]="{ administrator: administrator }"
+      >Add restaurant</a
+    >
+    <a
+      mat-button
+      routerLink="/administrator/add-menu"
+      routerLinkActive="active"
+      [state]="{ administrator: administrator }"
+      >Add menu</a
+    >
+    <a
+      mat-button
+      routerLink="/administrator/view-menu"
+      routerLinkActive="active"
+      [state]="{ administrator: administrator }"
+      >View menu</a
+    >
+  </span>
+</mat-toolbar>
+
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+    <mat-card-header>
+      <mat-card-title>Create a menu</mat-card-title>
+    </mat-card-header>
+    <mat-form-field appearance="fill">
+      <mat-label>Select restaurant</mat-label>
+      <mat-select [(value)]="selectedRestaurant">
+        <mat-option *ngFor="let r of restaurants" [value]="r">
+          {{ r.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Categories</mat-label>
+      <mat-select [(value)]="selectedCategory" required>
+        <mat-option value="BREAKFAST">BREAKFAST</mat-option>
+        <mat-option value="LUNCH">LUNCH</mat-option>
+        <mat-option value="DINNER">DINNER</mat-option>
+        <mat-option value="DESSERT">DESSERT</mat-option>
+        <mat-option value="BEVERAGES">BEVERAGES</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <form class="example-form">
+      <mat-card-content>
+        <mat-form-field class="example-full-width restaurant-name">
+          <input
+            matInput
+            placeholder=" Menu name"
+            [(ngModel)]="menuName"
+            name="name"
+            required
+            #nameModel="ngModel"
+          />
+        </mat-form-field>
+        <mat-form-field class="example-full-width restaurant-name">
+          <input
+            matInput
+            placeholder="Food name"
+            [(ngModel)]="food.name"
+            name="name"
+            required
+            #nameModel="ngModel"
+          />
+        </mat-form-field>
+        <mat-form-field class="example-full-width restaurant-location">
+          <input
+            matInput
+            placeholder="Food description"
+            [(ngModel)]="food.description"
+            required
+            name="description"
+            #nameModel="ngModel"
+          />
+        </mat-form-field>
+        <mat-form-field class="example-full-width restaurant-delivery">
+          <input
+            matInput
+            placeholder="Food price"
+            [(ngModel)]="food.price"
+            required
+            name="price"
+            #nameModel="ngModel"
+          />
+        </mat-form-field>
+      </mat-card-content>
+      <button
+        mat-stroked-button
+        color="accent"
+        class="btn-block"
+        id="button-1"
+        (click)="addMenu()"
+      >
+        Create menu and add food
+      </button>
+    </form>
+  </mat-card>
+</div>

@@ -1,0 +1,72 @@
+<mat-toolbar color="primary" class="app-header">
+  <span class="nav-tool-items">
+    <a mat-button routerLink="/administrator/add" routerLinkActive="active"
+      >Add restaurant</a
+    >
+    <a
+      mat-button
+      routerLink="/administrator/add-menu"
+      routerLinkActive="active"
+      [state]="{ administrator: administrator }"
+      >Add menu</a
+    >
+    <a
+      mat-button
+      routerLink="/administrator/view-menu"
+      routerLinkActive="active"
+      [state]="{ administrator: administrator }"
+      >View menu</a
+    >
+  </span>
+</mat-toolbar>
+
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+    <mat-card-header>
+      <mat-card-title>Add a restaurant</mat-card-title>
+    </mat-card-header>
+    <form class="example-form">
+      <mat-card-content>
+        <mat-form-field class="example-full-width restaurant-name">
+          <input
+            matInput
+            placeholder="Name"
+            [(ngModel)]="restaurant.name"
+            name="name"
+            required
+            #nameModel="ngModel"
+          />
+        </mat-form-field>
+        <mat-form-field class="example-full-width restaurant-location">
+          <input
+            matInput
+            placeholder="Location"
+            [(ngModel)]="restaurant.location"
+            required
+            name="location"
+            #nameModel="ngModel"
+          />
+        </mat-form-field>
+        <mat-form-field class="example-full-width restaurant-delivery">
+          <input
+            matInput
+            placeholder="Delivery zones"
+            [(ngModel)]="restaurant.deliveryZones"
+            required
+            name="deliveryZones"
+            #nameModel="ngModel"
+          />
+        </mat-form-field>
+      </mat-card-content>
+      <button
+        mat-stroked-button
+        color="accent"
+        class="btn-block"
+        (click)="handleAddRestaurant()"
+        id="button-1"
+      >
+        Add restaurant
+      </button>
+    </form>
+  </mat-card>
+</div>
