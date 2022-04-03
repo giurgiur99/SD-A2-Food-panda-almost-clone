@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Customer } from '../models/customer/customer';
+import { Food } from '../models/food';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +31,14 @@ export class CustomerService {
 
   async getRestaurants() {
     return await firstValueFrom(this.http.get(this.url + '/explore'));
+  }
+
+  async placeOrder(customer: Customer, food: Food[]) {
+    let postData = food[0];
+    return await firstValueFrom(
+      this.http.post(this.url + '/order?customer=' + customer.name, postData)
+    ).catch((error) => {
+      console.log('-- Order could not be processed! --');
+    });
   }
 }

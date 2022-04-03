@@ -1,6 +1,15 @@
 <mat-toolbar color="primary" class="app-header">
   <span class="nav-tool-items">
-    <a mat-button class="logo"> Food koala </a>
+    <a
+      mat-button
+      class="logo"
+      routerLink="/customer/restaurants"
+      routerLinkActive="active"
+      [state]="{ selectedFood: selectedFood }"
+      [state]="{ customer: customer }"
+    >
+      Food koala
+    </a>
   </span>
 </mat-toolbar>
 
@@ -47,7 +56,7 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-button>SAVE</button>
-      <button mat-button (click)="handleViewMenu(restaurant)">VIEW MENU</button>
+      <button mat-button (click)="handleViewMenu(restaurant, customer)">VIEW MENU</button>
     </mat-card-actions>
   </mat-card>
 </div>

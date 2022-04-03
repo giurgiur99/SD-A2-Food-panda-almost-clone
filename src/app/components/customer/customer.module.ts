@@ -9,9 +9,14 @@ import { AngularMaterialModule } from 'src/app/angular-material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RestaurantViewMenuComponent } from './restaurant-view-menu/restaurant-view-menu.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
-  declarations: [RestaurantsComponent, RestaurantViewMenuComponent],
+  declarations: [
+    RestaurantsComponent,
+    RestaurantViewMenuComponent,
+    CartComponent,
+  ],
   imports: [
     CommonModule,
     CustomerRoutingModule,

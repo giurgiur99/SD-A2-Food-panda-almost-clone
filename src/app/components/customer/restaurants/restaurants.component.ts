@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Customer } from 'src/app/shared/models/customer/customer';
 import { Restaurant } from 'src/app/shared/models/customer/restaurant';
+import { Food } from 'src/app/shared/models/food';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 
 @Component({
@@ -12,13 +13,17 @@ import { CustomerService } from 'src/app/shared/services/customer.service';
 export class RestaurantsComponent implements OnInit {
   customer: Customer;
   restaurants: Restaurant[];
+  selectedFood: Food[];
 
   constructor(
     private router: Router,
     private customerService: CustomerService
   ) {
     this.customer = this.router.getCurrentNavigation().extras.state['customer'];
+    this.selectedFood =
+      this.router.getCurrentNavigation().extras.state['selectedFood'];
     console.log(this.customer);
+    console.log(this.selectedFood);
   }
 
   counter(i: number) {
@@ -36,10 +41,11 @@ export class RestaurantsComponent implements OnInit {
     }
   }
 
-  handleViewMenu(restaurant: Restaurant) {
+  handleViewMenu(restaurant: Restaurant, customer: Customer) {
     this.router.navigate(['/customer/restaurants/view-menu'], {
       state: {
         restaurant: restaurant,
+        customer: customer,
       },
     });
   }
