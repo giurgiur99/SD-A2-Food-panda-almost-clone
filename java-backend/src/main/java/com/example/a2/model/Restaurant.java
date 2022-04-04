@@ -21,7 +21,7 @@ public class Restaurant {
     @Column(nullable = false)
     private String deliveryZones;
 
-    @Column(nullable = false)
+    @Column()
     private String description;
 
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)

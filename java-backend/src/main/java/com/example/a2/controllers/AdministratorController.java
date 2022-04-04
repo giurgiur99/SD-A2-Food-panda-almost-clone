@@ -43,12 +43,12 @@ public class AdministratorController {
         Administrator administrator = administratorService.getAdministrator(name);
         Restaurant restaurant = new Restaurant(restaurantDTO.getName(), restaurantDTO.getLocation(), restaurantDTO.getDeliveryZones());
 
-        try {
+//        try {
             administratorService.addRestaurantToAdministrator(restaurant, administrator);
-        }catch (Exception e){
-            System.out.println("-- This admin already has this restaurant registered! --");
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("-- This admin already has this restaurant registered! --");
-        }
+//        }catch (Exception e){
+//            System.out.println("-- This admin already has this restaurant registered! --");
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body("-- This admin already has this restaurant registered! --");
+//        }
         return ResponseEntity.status(HttpStatus.OK)
                 .body(restaurant);
     }

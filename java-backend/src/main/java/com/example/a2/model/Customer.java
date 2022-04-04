@@ -35,6 +35,15 @@ public class Customer {
         this.status = status;
     }
 
+    public void encrypt(){
+        StringBuilder encryptedPass = new StringBuilder(this.password);
+        for(int i = 0 ; i < this.password.length() ; i++){
+            encryptedPass.setCharAt(i, (char) (encryptedPass.charAt(i) + 5));
+        }
+        System.out.println(encryptedPass);
+        this.password = String.valueOf(encryptedPass);
+    }
+
     public Long getId() {
         return id;
     }
@@ -59,12 +68,19 @@ public class Customer {
         this.password = password;
     }
 
-
     public Status getStatus() {
         return status;
     }
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public List<Food> getFood() {
+        return food;
+    }
+
+    public void addFood(Food food) {
+        this.food.add(food);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.a2.controllers;
 
 import com.example.a2.DTO.CustomerDTO;
+import com.example.a2.DTO.FoodDTO;
 import com.example.a2.DTO.RestaurantDTO;
 import com.example.a2.model.Customer;
 import com.example.a2.model.Menu;
@@ -27,7 +28,9 @@ public class CustomerController {
     @PostMapping("/customer/add")
     public ResponseEntity addCustomer(@RequestBody CustomerDTO customerDTO){
         try {
-            customerService.insertCustomer(new Customer(customerDTO.getName(), customerDTO.getPassword(), Status.ACCEPTED));
+            Customer customer = new Customer(customerDTO.getName(), customerDTO.getPassword(), Status.ACCEPTED);
+           // customer.encrypt();
+            customerService.insertCustomer(customer);
             return ResponseEntity.status(HttpStatus.OK).body(customerDTO);
         }catch (Exception e){
             System.out.println("User already added");
@@ -68,5 +71,15 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("-- Restaurant not found! --");
         }
     }
+    @PostMapping("/customer/order")
+    public ResponseEntity addOrder(@RequestParam String customer, @RequestBody FoodDTO foodDTO){
+//        try {
+            customerService.order(customerService.findCustomer(customer), restaurantService.findFood(foodDTO.getName()));
+            return ResponseEntity.status(HttpStatus.OK).body(foodDTO);
+//        }catch (Exception e){
+//            System.out.println("-- Error --");
+//            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("-- Error --");
+//        }
+   }
 
 }
