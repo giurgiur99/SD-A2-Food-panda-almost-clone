@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { Token } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Customer } from '../models/customer/customer';
@@ -30,13 +31,31 @@ export class CustomerService {
   }
 
   async getRestaurants() {
-    return await firstValueFrom(this.http.get(this.url + '/explore'));
+    let headers;
+
+    console.log('Bearer ' + sessionStorage.getItem('token'));
+    if (sessionStorage.getItem('token')) {
+      headers = { Authorization: 'Bearer ' + sessionStorage.getItem('token') };
+    }
+    return await firstValueFrom(
+      this.http.get(this.url + '/explore', {
+        headers: headers,
+      })
+    );
   }
 
   async placeOrder(customer: Customer, food: Food[]) {
+    let headers;
+    console.log('Bearer ' + sessionStorage.getItem('token'));
+    if (sessionStorage.getItem('token')) {
+      headers = { Authorization: 'Bearer ' + sessionStorage.getItem('token') };
+    }
+
     let postData = food[0];
     return await firstValueFrom(
-      this.http.post(this.url + '/order?customer=' + customer.name, postData)
+      this.http.post(this.url + '/order?customer=' + customer.name, postData, {
+        headers: headers,
+      })
     ).catch((error) => {
       console.log('-- Order could not be processed! --');
     });

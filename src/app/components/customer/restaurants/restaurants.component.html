@@ -33,11 +33,7 @@
   fxLayoutGap="25px"
   *ngFor="let restaurant of restaurants"
 >
-  <mat-card
-    class="example-card"
-    fxFlex="calc(33%-25px)"
-    fxFlex.sm="calc(50%-25px)"
-  >
+  <mat-card class="example-card" fxFlex="calc(33%x)" fxFlex.sm="calc(50%)">
     <mat-card-header>
       <mat-card-title>{{ restaurant.name }}</mat-card-title>
       <mat-card-subtitle>{{ restaurant.location }}</mat-card-subtitle>
@@ -45,9 +41,8 @@
 
     <img
       mat-card-image
-      [src]="restaurant.imgUrl"
+      [src]="restaurant.imgUrl ?? imgUrl"
       alt="Photo of a Shiba Inu"
-      src="../../../../assets/card-pics/asset_Burger king.jpg"
     />
     <mat-card-content>
       <p>
@@ -56,7 +51,9 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-button>SAVE</button>
-      <button mat-button (click)="handleViewMenu(restaurant, customer)">VIEW MENU</button>
+      <button mat-button (click)="handleViewMenu(restaurant, customer)">
+        VIEW MENU
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>

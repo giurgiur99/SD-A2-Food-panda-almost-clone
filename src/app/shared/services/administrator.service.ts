@@ -31,7 +31,9 @@ export class AdministratorService {
     };
     let returnStatement = await firstValueFrom(
       this.http.post(
-        this.url + '/add' + `?name=${administrator.name}`,
+        this.url +
+          '/administrator/restaurant/add?name=' +
+          `${administrator.name}`,
         postData
       )
     );

@@ -14,6 +14,7 @@ export class RestaurantsComponent implements OnInit {
   customer: Customer;
   restaurants: Restaurant[];
   selectedFood: Food[];
+  imgUrl = 'http://loremflickr.com/400/400/restaurant';
 
   constructor(
     private router: Router,

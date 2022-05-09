@@ -34,4 +34,13 @@ public class FoodDTO {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Food " +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price
+                ;
+    }
 }

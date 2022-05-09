@@ -1,9 +1,13 @@
 package com.example.a2.controllers;
 
 import com.example.a2.DTO.*;
+import com.example.a2.config.AdminPDFExporter;
+import com.example.a2.config.JwtTokenUtil;
 import com.example.a2.model.*;
 import com.example.a2.services.AdministratorService;
 import com.example.a2.services.RestaurantService;
+import com.lowagie.text.DocumentException;
+import com.sun.tools.jconsole.JConsoleContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -13,7 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -22,6 +31,8 @@ public class AdministratorController {
     private AdministratorService administratorService;
     @Autowired
     private RestaurantService restaurantService;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/administrator/add")
     public ResponseEntity addAdministrator(@RequestBody AdministratorDTO administratorDTO){
@@ -38,8 +49,9 @@ public class AdministratorController {
                 .body(administrator);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/administrator/restaurant/add")
     public ResponseEntity addRestaurantToAdministrator(@RequestParam String name, @RequestBody RestaurantDTO restaurantDTO) {
+
         Administrator administrator = administratorService.getAdministrator(name);
         Restaurant restaurant = new Restaurant(restaurantDTO.getName(), restaurantDTO.getLocation(), restaurantDTO.getDeliveryZones());
 
@@ -76,6 +88,22 @@ public class AdministratorController {
                     .body(menu);
     }
 
+    @PostMapping("/administrator/food/add")
+    public ResponseEntity addFoodToMenu (@RequestBody FoodDTO foodDTO, @RequestParam String restaurantName, @RequestParam String menuName){
+        Restaurant restaurant = restaurantService.getRestaurant(restaurantName);
+        Menu menu = new Menu();
+        try {
+            menu = restaurantService.getMenuByName(restaurantName, menuName);
+            Food newFood = new Food(foodDTO.getName(), foodDTO.getDescription(), foodDTO.getPrice());
+            menu.addFood(newFood);
+            restaurantService.saveMenu(restaurant, menu);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(menu);
+    }
+
     @GetMapping("/administrator")
     public ResponseEntity getMenusByRestaurant (@RequestParam String restaurantName){
         List<Menu> menuArrayList;
@@ -108,6 +136,23 @@ public class AdministratorController {
             System.out.println("User has no restaurants");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("-- User has no restaurants --");
         }
+    }
+
+    @GetMapping("/administrator/export")
+    public void exportToPDF(@RequestParam String restaurantName ,HttpServletResponse response) throws DocumentException, IOException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=menu_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        List<Menu> listMenu = administratorService.getRestaurantsMenu(restaurantName);
+
+        AdminPDFExporter exporter = new AdminPDFExporter(listMenu);
+        exporter.export(response);
+
     }
 
 

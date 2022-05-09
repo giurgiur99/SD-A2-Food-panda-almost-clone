@@ -8,4 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MenuRepo extends JpaRepository<Menu, Long> {
+    Menu findByName(String name);
 }
